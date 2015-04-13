@@ -1,0 +1,43 @@
+html
+  head
+    title Chat Room
+    script(src='/socket.io/socket.io.js')
+    script.
+      var nowTime = new Date().toLocaleTimeString(); 
+      var socket = io.connect('http://localhost:3001')
+      var url_name;
+      function hehe()
+      {
+        var query = location.search.substring(1);
+        url_name = query.split("=");
+      }
+      window.onload=hehe;      
+
+      //when submitted,use this function
+      function checksubmit(){
+        
+        if(url_name[1] == undefined)
+        {
+          window.location.href = 'http://localhost:3001'
+        }
+        var words='*'+nowTime+'-'+url_name[1]+ '-'+document.getElementById("myform").message.value+'\n'
+        
+        socket.emit('news',words)
+        console.log('test');
+       
+        return false; 
+      }
+      //display to the web page
+      socket.on('my other event',function(data){
+        document.getElementById("text1").innerHTML=data
+      })
+      
+
+  body
+    form#myform(onsubmit='return checksubmit();')
+      | Message:
+      textarea#message(rows='3', cols='50')
+      input(type='submit', value='Send')
+      br
+      textarea#text1(rows='40', cols='80')
+

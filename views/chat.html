@@ -1,0 +1,36 @@
+<html>
+<head>
+	<title></title>
+</head>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var data = new Data.toString();
+	var socket = io.connect('http://localhost:3001');
+  var words;
+  function checksubmit(){
+    words = myform.username.value;
+    if(words=="")
+    {
+      return false;   
+    }
+  }
+ 
+  socket.emit('news',words);
+	socket.on('my other event',function(data){
+		console.log(data);
+		document.getElementById("text1").innerHTML=data;
+	});
+</script>
+<body>
+	<form name='myform' onsubmit="return checksubmit();">
+    Name:
+    <input type="text" name="username" />
+    <br />
+    Message:
+    <textarea rows="3" cols="50" id="text_message"></textarea>
+    <input type="submit" value="Send" />
+    <br />
+    <textarea rows="40" cols="80" id="text1"></textarea>
+  </form>
+</body>
+</html>

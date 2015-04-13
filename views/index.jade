@@ -1,0 +1,22 @@
+html
+  head
+    title Home page
+    script(src='/socket.io/socket.io.js')
+    script.
+      var socket = io.connect('http://localhost:3001')
+      var words;
+      function checksubmit(){
+        
+        words = document.getElementById("myform").username.value
+        socket.emit('name',words)
+        window.location.href='http://localhost:3001/chat?name='+words
+        return false
+      }
+
+      
+    
+  body
+    form#myform(onsubmit='return checksubmit();')
+      | Name:
+      input(type='text', name='username')
+      input(type='submit', name='join',value='Join')

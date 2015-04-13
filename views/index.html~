@@ -1,0 +1,26 @@
+<html>
+<head>
+  <title>Home page</title>
+</head>
+ 
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var socket = io.connect('http://localhost:3001');
+  function checksubmit(){
+    var words = document.getElementById("sendName").username.value;
+    if(words=="")
+    {
+      return false;   
+    }
+	});
+    socket.emit('name',words);
+</script>
+
+<body>
+  <form name="sendName" onsubmit="return checksubmit();">
+    Name:
+    <input type="text" name="username" />
+    <input type="submit" value="Join" />
+  </form>
+</body>
+</html>

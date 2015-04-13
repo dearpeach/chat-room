@@ -1,0 +1,36 @@
+html
+  head
+    title
+    script(src='/socket.io/socket.io.js')
+    script.
+      
+      var socket = io.connect('http://localhost:3001')
+      
+      //when submitted,use this function
+      function checksubmit(){
+        var nowTime = new Date().toLocaleTimeString()
+        //content is made of time,name and message.
+        var words='*'+nowTime+'-'+document.getElementById("myform").username.value + '-' + document.getElementById("myform").message.value+'\n'
+        
+        socket.emit('news',words)
+        console.log('test');
+       
+        return false; 
+      }
+      //display to the web page
+      socket.on('my other event',function(data){
+        document.getElementById("text1").innerHTML=data
+      })
+      
+
+  body
+    form#myform(onsubmit='return checksubmit();')
+      | Name:
+      input(type='text', name='username')
+      br
+      | Message:
+      textarea#message(rows='3', cols='50')
+      input(type='submit', value='Send')
+      br
+      textarea#text1(rows='40', cols='80')
+
